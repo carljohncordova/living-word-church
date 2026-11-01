@@ -11,6 +11,22 @@ if (toggle && nav) {
     nav.classList.remove('open'); toggle.setAttribute('aria-expanded', 'false'); toggle.textContent = '☰';
   }));
 }
+window.addEventListener('pageshow', () => document.body.classList.remove('page-leave'));
+document.addEventListener('click', event => {
+  const link = event.target.closest('a');
+  if (!link || event.defaultPrevented || event.button !== 0) return;
+  if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+  if (link.target === '_blank' || link.hasAttribute('download')) return;
+  const href = link.getAttribute('href');
+  if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+  const url = new URL(link.href, location.href);
+  if (url.origin !== location.origin) return;
+  if (url.pathname === location.pathname) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  event.preventDefault();
+  document.body.classList.add('page-leave');
+  window.setTimeout(() => { location.href = link.href; }, 320);
+});
 const testimonies = window.TESTIMONIES || [];
 function escapeHtml(value) {
   return String(value).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
