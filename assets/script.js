@@ -43,7 +43,7 @@ function testimonyProfile(item, large) {
   return `<div class="testimony-profile">${testimonyAvatar(item, large)}<p class="profile-meta"><strong>${escapeHtml(item.name)}</strong><span>${escapeHtml(item.role)} · ${escapeHtml(item.campus)}</span></p></div>`;
 }
 function testimonyCard(item, linked) {
-  const link = linked ? `<a class="text-link" href="blog.html#${escapeHtml(item.id)}">Read testimony <span>→</span></a>` : '';
+  const link = linked ? `<a class="text-link" href="/blog#${escapeHtml(item.id)}">Read testimony <span>→</span></a>` : '';
   const clickable = linked ? '' : ' tabindex="0" role="button"';
   return `<article class="blog-card testimony-card searchable" data-id="${escapeHtml(item.id)}"${clickable}><div class="card-body">${testimonyProfile(item, false)}<p class="card-kicker">SAMPLE TESTIMONY</p><h3>${escapeHtml(item.title)}</h3><p class="testimony-text">${escapeHtml(item.testimony)}</p>${link}</div></article>`;
 }
